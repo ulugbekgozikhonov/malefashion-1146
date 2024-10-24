@@ -36,7 +36,7 @@
                         {% if messages %}
                             <ul>
                                 {% for message in messages %}
-                                    <li class="alert {{ message }}">{{ message }}</li>
+                                    <li style="color: red">{{ message }}</li>
                                 {% endfor %}
                             </ul>
                         {% endif %}
@@ -64,7 +64,7 @@
                             </div>
 
                             <div class="d-sm-flex mb-5 align-items-center">
-                                <p>You have an account ? <a href="{% url 'login' %}">Login</a></p>
+                                <p>You have an account ? <a href="{% url 'users:login' %}">Login</a></p>
                                 <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span>
                             </div>
 

@@ -31,6 +31,13 @@
                         <div class="text-center mb-5">
                             <h3 class="text-uppercase">Login to <strong>Colorlib</strong></h3>
                         </div>
+                        {% if messages %}
+                            <ul>
+                                {% for message in messages %}
+                                    <li style="color: red">{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
                         <form action="#" method="POST">
                             {% csrf_token %}
                             <div class="form-group first">
@@ -45,7 +52,7 @@
                             </div>
 
                             <div class="d-sm-flex mb-5 align-items-center">
-                                <p>You don't have an account ? <a href="{% url 'signup' %}">Register</a></p>
+                                <p>You don't have an account ? <a href="{% url 'users:signup' %}">Register</a></p>
                                 <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span>
                             </div>
 

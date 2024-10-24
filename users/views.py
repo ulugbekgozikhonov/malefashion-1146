@@ -1,13 +1,8 @@
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-
-from users.utility import generate_code
-
-
-def login_view(request):
-	return render(request, "registration/login.html")
 
 
 def signup_view(request):
@@ -32,12 +27,26 @@ def signup_view(request):
 			password=password,
 			email=email
 		)
-		code = generate_code()
-		print(code)
-		return render(request, template_name="registration/verification_code.html")
+		return redirect('users:login')
 	else:
 		return render(request, "registration/signup.html")
 
 
-def verification_view(request):
-	return render(request, "registration/verification_code.html")
+def login_view(request):
+	if request.method == "POST":
+		username = request.POST.get("username")
+		password = request.POST.get("password")
+		user = authenticate(request, username=username, password=password)
+		if user is not None:
+			login(request, user)
+			return redirect("pages:home")
+		else:
+			messages.error(request, "username or password error")
+			return redirect(request.path_info)
+
+	return render(request, "registration/login.html")
+
+
+def logout_view(request):
+	logout(request)
+	return redirect('pages:home')

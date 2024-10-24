@@ -20,3 +20,7 @@ class HomePageView(ListView):
 
 	def get_queryset(self):
 		return self.model.objects.filter(status=True)
+
+
+def shop_view(request):
+	return render(request, "shop.html")
