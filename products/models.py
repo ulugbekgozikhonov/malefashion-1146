@@ -44,10 +44,15 @@ class Product(BaseModel):
 	name = models.CharField(max_length=31)
 	description = models.TextField()
 	price = models.FloatField()
+	discount = models.FloatField()
 	photo = models.ImageField(upload_to='products/images')
 	rating = models.PositiveIntegerField(default=1, validators=[validator_rating])
 	category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="products")
 	brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name="products")
-	size = models.ManyToManyField(Size, null=True, blank=True)
-	color = models.ManyToManyField(Color, null=True, blank=True)
+	size = models.ManyToManyField(Size, blank=True)
+	color = models.ManyToManyField(Color, blank=True)
 	tag = models.ManyToManyField(Tags)
+
+	@property
+	def real_price(self):
+		return self.price - self.price * self.discount / 100
