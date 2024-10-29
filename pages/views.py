@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import ListView
 
 from .models import Banner
+from products.models import Product,Category , Brand , Color,Tags
 
 
 def home_view(request):
@@ -23,4 +24,19 @@ class HomePageView(ListView):
 
 
 def shop_view(request):
-	return render(request, "shop.html")
+	products = Product.objects.order_by("-created_at")
+	categories = Category.objects.order_by("-created_at")
+	brands = Brand.objects.order_by("-created_at")
+	colors = Color.objects.all()
+	tags = Tags.objects.all()
+
+	context = {
+		"products": products,
+		"categories": categories,
+		"brands": brands,
+		"colors": colors,
+		"tags": tags
+
+
+	}
+	return render(request, "shop.html", context)
