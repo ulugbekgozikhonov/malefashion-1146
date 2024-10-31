@@ -63,7 +63,9 @@ class ShopView(ListView):
 
 def shop_detail_view(request, pk):
 	product = Product.objects.filter(id=pk).first()
+	related_products = Product.objects.filter(category__title=product.category.title).exclude(pk=product.id)[:4]
 	context = {
-		"product": product
+		"product": product,
+		"related_products": related_products,
 	}
 	return render(request=request, template_name="shop-details.html", context=context)

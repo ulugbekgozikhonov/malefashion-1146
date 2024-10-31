@@ -1,4 +1,6 @@
+from django.core.validators import FileExtensionValidator
 from django.db import models
+from django.utils import timezone
 
 from general.models import BaseModel
 from products.validators import validator_rating
@@ -56,3 +58,16 @@ class Product(BaseModel):
 	@property
 	def real_price(self):
 		return self.price - self.price * self.discount / 100
+
+	@property
+	def is_new(self):
+		return (timezone.now() - self.created_at).days <= 3
+
+	def __str__(self):
+		return self.name
+
+
+class ProductImages(BaseModel):
+	photo = models.ImageField(upload_to="products/images/",
+	                          validators=[FileExtensionValidator(allowed_extensions=['jpg', 'png', 'jpeg', 'heic'])])
+	product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="images")

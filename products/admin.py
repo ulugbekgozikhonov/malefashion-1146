@@ -30,3 +30,8 @@ class TagsAdmin(admin.ModelAdmin):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
 	list_display = ["id", "name", "price"]
+
+
+@admin.register(ProductImages)
+class ProductImagesAdmin(admin.ModelAdmin):
+	list_display = ["id", "product"]
