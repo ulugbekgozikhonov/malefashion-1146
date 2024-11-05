@@ -44,7 +44,8 @@
                                             <div class="shop__sidebar__categories">
                                                 <ul class="nice-scroll">
                                                     {% for category in categories %}
-                                                        <li><a href="#">{{ category.title }}
+                                                        <li><a href="
+                                                                {% url 'pages:shop' %}?category={{ category.title }}">{{ category.title }}
                                                             ({{ category.products.count }})</a></li>
                                                     {% endfor %}
                                                 </ul>
@@ -179,7 +180,8 @@
                                     </div>
                                     <div class="product__item__text">
                                         <h6>{{ product.name }}</h6>
-                                        <a href="{% url 'products:add-to-cart' product.id %}" class="add-cart">+ Add To
+                                        <a href="{% url 'products:add-to-cart' product.id %}" class="add-cart">+ Add
+                                            To
                                             Cart</a>
                                         <div class="rating">
                                             <i class="fa fa-star-o"></i>

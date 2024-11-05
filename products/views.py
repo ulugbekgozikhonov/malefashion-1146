@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 
 
 def add_to_cart(request, pk):
@@ -16,3 +16,11 @@ def add_to_cart(request, pk):
 	print(cart)
 
 	return redirect(current_path)
+
+# def remove_to_cart(request, pk):
+# 	current_path = request.META["HTTP_REFERER"]
+#
+# 	cart = request.session.get("cart", [])
+#
+# 	if pk in cart:
+# 		cart.remove(pk)

@@ -48,7 +48,13 @@ class ShopView(ListView):
 	context_object_name = "products"
 
 	def get_queryset(self):
-		return Product.objects.order_by("-created_at")
+		products = Product.objects.order_by("-created_at")
+		category = self.request.GET.get('category')
+		brand = self.request.GET.get('brand')
+		if category is not None:
+			products = Product.objects.filter(category__title=category)
+
+		return products
 
 	def get_context_data(self, *, object_list=None, **kwargs):
 		context = super().get_context_data(**kwargs)
@@ -57,7 +63,6 @@ class ShopView(ListView):
 		context["brands"] = Brand.objects.order_by("-created_at")
 		context["sizes"] = Size.objects.all()
 		context["tags"] = Tags.objects.all()
-
 		return context
 
 
@@ -69,3 +74,15 @@ def shop_detail_view(request, pk):
 		"related_products": related_products,
 	}
 	return render(request=request, template_name="shop-details.html", context=context)
+
+
+def shop_cart_view(request):
+	product_ids = request.session.get("cart", [])
+
+	products = Product.objects.filter(id__in=product_ids)
+
+	context = {
+		"products": products
+	}
+
+	return render(request, "shopping-cart.html", context)
