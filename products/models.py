@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.utils import timezone
@@ -71,3 +72,11 @@ class ProductImages(BaseModel):
 	photo = models.ImageField(upload_to="products/images/",
 	                          validators=[FileExtensionValidator(allowed_extensions=['jpg', 'png', 'jpeg', 'heic'])])
 	product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="images")
+
+
+class WishList(BaseModel):
+	product = models.ForeignKey(Product, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+	class Meta:
+		unique_together = ["product", "user"]
