@@ -35,3 +35,8 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(ProductImages)
 class ProductImagesAdmin(admin.ModelAdmin):
 	list_display = ["id", "product"]
+
+
+@admin.register(WishList)
+class WishlistAdmin(admin.ModelAdmin):
+	list_display = ["id", "user", "product"]

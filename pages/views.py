@@ -46,6 +46,7 @@ class ShopView(ListView):
 	template_name = "shop.html"
 	model = Product
 	context_object_name = "products"
+	paginate_by = 2
 
 	def get_queryset(self):
 		products = Product.objects.order_by("-created_at")
